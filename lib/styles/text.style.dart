@@ -16,4 +16,8 @@ class WhiteNoiseTextStyles {
       fontSize: 12,
       color: const Color(0xFFBABABA),
       fontWeight: FontWeight.w400);
+  static final listMenu = GoogleFonts.poppins(
+      fontSize: 14,
+      color: const Color(0xFFBABABA),
+      fontWeight: FontWeight.w400);
 }

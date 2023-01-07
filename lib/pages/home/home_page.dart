@@ -34,7 +34,10 @@ class HomePage extends StatelessWidget {
                         'Forest Collection',
                         style: WhiteNoiseTextStyles.title,
                       ),
-                      const AnimatedIconsSound()
+                      MainSoundType(),
+                      const AnimatedIconsSound(),
+                      const AnimatedIconsSound(),
+                      const AnimatedIconsSound(),
                     ],
                   ),
                 ),
@@ -80,6 +83,89 @@ class HomePage extends StatelessWidget {
   }
 }
 
+class MainSoundType extends StatelessWidget {
+  const MainSoundType({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Container(
+          height: 230,
+          width: 150,
+          decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey,
+                  offset: Offset(5.0, 5.0),
+                  blurRadius: 10.0,
+                ),
+              ],
+              borderRadius: BorderRadius.circular(12),
+              color: Colors.red,
+              image: DecorationImage(
+                  fit: BoxFit.fitHeight,
+                  image: AssetImage(
+                    'assets/images/forest.png',
+                  ))),
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Icon(
+                  Icons.bookmark,
+                  color: Colors.white,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('04',
+                          style: WhiteNoiseTextStyles.menu
+                              .copyWith(color: Colors.white)),
+                      SizedBox(
+                        width: 70,
+                        child: Text(
+                          'Being in the forest',
+                          style: WhiteNoiseTextStyles.listMenu
+                              .copyWith(color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+        Positioned(
+          left: 105,
+          top: 30,
+          child: Container(
+            width: 90,
+            height: 90,
+            decoration:
+                BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+            child: Padding(
+              padding: const EdgeInsets.all(25.0),
+              child: SvgPicture.asset(
+                'assets/icons/tree.svg',
+                color: whiteNoiseGrey,
+              ),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+}
+
 class AnimatedIconsSound extends StatefulWidget {
   const AnimatedIconsSound({
     Key? key,
@@ -95,53 +181,56 @@ class _AnimatedIconsSoundState extends State<AnimatedIconsSound>
   late Animation<double> animation;
 
   @override
-  void initState() {
-    super.initState();
-    controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 2),
-    )
-      ..forward()
-      ..repeat(reverse: true);
-    animation = Tween<double>(begin: 0.0, end: 1.0).animate(controller);
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return SizedBox(
       child: Row(
         children: [
-          Stack(
-            children: [
-              Container(
-                height: 100,
-                width: 100,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    image: DecorationImage(
-                        image: AssetImage('assets/images/mount.png'))),
-                child: Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Lottie.asset(
-                    'assets/lottie/soundwave.json',
-                    height: 24,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 15),
+            child: Stack(
+              children: [
+                Container(
+                  height: 50,
+                  width: 50,
+                  decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey,
+                          offset: Offset(-1.0, 2.0),
+                          blurRadius: 10.0,
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(16),
+                      image: DecorationImage(
+                          image: AssetImage('assets/images/mount.png'))),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Lottie.asset(
+                      'assets/lottie/musicwave.json',
+                      height: 24,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           SizedBox(
-            child: Lottie.asset(
-              'assets/lottie/soundwave.json',
-              height: 34,
-            ),
-          )
+              height: 40,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Sound of wind',
+                    style: WhiteNoiseTextStyles.listMenu
+                        .copyWith(color: whiteNoiseGrey),
+                  ),
+                  Text(
+                    '1.45s',
+                    style: WhiteNoiseTextStyles.listMenu.copyWith(fontSize: 8),
+                  ),
+                ],
+              ))
         ],
       ),
     );

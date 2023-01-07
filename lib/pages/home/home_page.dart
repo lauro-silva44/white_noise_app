@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
+import 'package:white_noise_app/helpers/soundslist.dart';
 import 'package:white_noise_app/styles/text.style.dart';
 
 import '../../styles/colors.dart';
@@ -35,9 +36,20 @@ class HomePage extends StatelessWidget {
                         style: WhiteNoiseTextStyles.title,
                       ),
                       MainSoundType(),
-                      const AnimatedIconsSound(),
-                      const AnimatedIconsSound(),
-                      const AnimatedIconsSound(),
+                      SingleChildScrollView(
+                        child: SizedBox(
+                          height: 250,
+                          child: ListView(
+                            children: sounds.map((item) {
+                              return AnimatedIconsSound(
+                                name: item[0],
+                                duration: item[1],
+                                picPath: item[2],
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -90,85 +102,98 @@ class MainSoundType extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        Container(
-          height: 230,
-          width: 150,
-          decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey,
-                  offset: Offset(5.0, 5.0),
-                  blurRadius: 10.0,
-                ),
-              ],
-              borderRadius: BorderRadius.circular(12),
-              color: Colors.red,
-              image: DecorationImage(
-                  fit: BoxFit.fitHeight,
-                  image: AssetImage(
-                    'assets/images/forest.png',
-                  ))),
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Icon(
-                  Icons.bookmark,
-                  color: Colors.white,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('04',
-                          style: WhiteNoiseTextStyles.menu
-                              .copyWith(color: Colors.white)),
-                      SizedBox(
-                        width: 70,
-                        child: Text(
-                          'Being in the forest',
-                          style: WhiteNoiseTextStyles.listMenu
-                              .copyWith(color: Colors.white),
-                        ),
-                      ),
-                    ],
+    return SizedBox(
+      height: 230,
+      width: 150,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Container(
+            height: 230,
+            width: 150,
+            decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    offset: Offset(5.0, 5.0),
+                    blurRadius: 10.0,
                   ),
-                )
-              ],
-            ),
-          ),
-        ),
-        Positioned(
-          left: 105,
-          top: 30,
-          child: Container(
-            width: 90,
-            height: 90,
-            decoration:
-                BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+                ],
+                borderRadius: BorderRadius.circular(12),
+                color: Colors.red,
+                image: DecorationImage(
+                    fit: BoxFit.fitHeight,
+                    image: AssetImage(
+                      'assets/images/forest.png',
+                    ))),
             child: Padding(
-              padding: const EdgeInsets.all(25.0),
-              child: SvgPicture.asset(
-                'assets/icons/tree.svg',
-                color: whiteNoiseGrey,
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Icon(
+                    Icons.bookmark,
+                    color: Colors.white,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('04',
+                            style: WhiteNoiseTextStyles.menu
+                                .copyWith(color: Colors.white)),
+                        SizedBox(
+                          width: 70,
+                          child: Text(
+                            'Being in the forest',
+                            style: WhiteNoiseTextStyles.listMenu
+                                .copyWith(color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
               ),
             ),
           ),
-        )
-      ],
+          Positioned(
+            left: 105,
+            top: 30,
+            child: Container(
+              width: 90,
+              height: 90,
+              decoration: BoxDecoration(boxShadow: [
+                BoxShadow(
+                  color: Colors.grey,
+                  offset: Offset(-1.0, 2.0),
+                  blurRadius: 10.0,
+                ),
+              ], color: Colors.white, shape: BoxShape.circle),
+              child: Padding(
+                padding: const EdgeInsets.all(25.0),
+                child: SvgPicture.asset(
+                  'assets/icons/tree.svg',
+                  color: whiteNoiseGrey,
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
 
 class AnimatedIconsSound extends StatefulWidget {
+  final String name, duration, picPath;
   const AnimatedIconsSound({
     Key? key,
+    required this.name,
+    required this.duration,
+    required this.picPath,
   }) : super(key: key);
 
   @override
@@ -182,57 +207,54 @@ class _AnimatedIconsSoundState extends State<AnimatedIconsSound>
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 15),
-            child: Stack(
-              children: [
-                Container(
-                  height: 50,
-                  width: 50,
-                  decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey,
-                          offset: Offset(-1.0, 2.0),
-                          blurRadius: 10.0,
-                        ),
-                      ],
-                      borderRadius: BorderRadius.circular(16),
-                      image: DecorationImage(
-                          image: AssetImage('assets/images/mount.png'))),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Lottie.asset(
-                      'assets/lottie/musicwave.json',
-                      height: 24,
-                    ),
+    return Row(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 15),
+          child: Stack(
+            children: [
+              Container(
+                height: 50,
+                width: 50,
+                decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(-1.0, 2.0),
+                        blurRadius: 10.0,
+                      ),
+                    ],
+                    borderRadius: BorderRadius.circular(16),
+                    image: DecorationImage(image: AssetImage(widget.picPath))),
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Lottie.asset(
+                    'assets/lottie/musicwave.json',
+                    height: 24,
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          SizedBox(
-              height: 40,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Sound of wind',
-                    style: WhiteNoiseTextStyles.listMenu
-                        .copyWith(color: whiteNoiseGrey),
-                  ),
-                  Text(
-                    '1.45s',
-                    style: WhiteNoiseTextStyles.listMenu.copyWith(fontSize: 8),
-                  ),
-                ],
-              ))
-        ],
-      ),
+        ),
+        SizedBox(
+            height: 40,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.name,
+                  style: WhiteNoiseTextStyles.listMenu
+                      .copyWith(color: whiteNoiseGrey),
+                ),
+                Text(
+                  widget.duration,
+                  style: WhiteNoiseTextStyles.listMenu.copyWith(fontSize: 8),
+                ),
+              ],
+            ))
+      ],
     );
   }
 }
